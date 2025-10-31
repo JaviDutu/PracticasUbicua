@@ -27,10 +27,10 @@ const long  gmtOffset_sec = 3600;   // Madrid: UTC+1
 const int   daylightOffset_sec = 3600;
 
 // --- Mapeo de Pines (Hardware Abstraction Layer) ---
-const int PIN_LED_ROJO = 27;
-const int PIN_LED_AMARILLO = 26;
-const int PIN_LED_VERDE = 25;
-const int PIN_PULSADOR = 4;
+const int PIN_LED_ROJO = 23;
+const int PIN_LED_AMARILLO = 19;
+const int PIN_LED_VERDE = 18;
+const int PIN_PULSADOR = 5;
 const int PIN_LDR = 34;
 // Los pines I2C para la pantalla (SDA=21, SCL=22) son manejados por la librería.
 
@@ -43,13 +43,14 @@ enum EstadoSemaforo {
 
 // --- Parámetros de Comportamiento del Semáforo ---
 const unsigned long TIEMPO_VERDE_MINIMO = 10000;
-const unsigned long TIEMPO_VERDE_MAXIMO = 15000;
+const unsigned long TIEMPO_VERDE_MAXIMO = 25000;
 const unsigned long TIEMPO_AMARILLO = 3000;
 const unsigned long TIEMPO_ROJO = 10000;
 const long intervaloPublicacion = 10000; // Publicar datos cada 15 segundos
-const int BRILLO_ALTO      = 255;
-const int BRILLO_ATENUADO  = 40;
-const int UMBRAL_LUZ_LDR   = 600;
+// --- Umbrales brillo ---
+const int BRIGHT_LEVEL = 255;
+const int DIM_LEVEL = 20;
+const int LDR_TRESHOLD = 400;
 
 // --- Configuración de Pantalla OLED ---
 #define ANCHO_PANTALLA 128 // Ancho en píxeles

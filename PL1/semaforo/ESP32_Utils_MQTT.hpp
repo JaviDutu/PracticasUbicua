@@ -1,45 +1,38 @@
 // =============================================================================
-// ARCHIVO: ESP32_Utils_MQTT.hpp (VERSIÓN FINAL CORREGIDA)
+// ARCHIVO: ESP32_Utils_MQTT.hpp
 // DESCRIPCIÓN: Funciones genéricas para gestionar la conexión MQTT.
 // =============================================================================
-
 #include <PubSubClient.h>
-
-// Declaraciones 'extern'
+// Declaración del cliente MQTT (el objeto real vivirá en el .ino)
 extern PubSubClient mqttClient;
-
-// Ya no necesitamos acceder a las variables de estado del semáforo desde aquí,
-// así que eliminamos las declaraciones 'extern' para 'estadoAnterior' y 'tiempoAnteriorEstado'
-// para mantener el código limpio.
-
-extern void actualizarPantalla(String mensaje1, String mensaje2);
 
 
 void handleMqtt() {
   static unsigned long lastMqttReconnectAttempt = 0;
   if (!mqttClient.connected()) {
+    // Intentar reconectar solo cada 5 segundos para no bloquear el loop
     if (millis() - lastMqttReconnectAttempt > 5000) {
       lastMqttReconnectAttempt = millis();
       Serial.print("Intentando conexión MQTT...");
       actualizarPantalla("MQTT", "Conectando...");
       
+      // Asegúrate de que las variables mqtt_client_id, etc. estén en config.h
       if (mqttClient.connect(mqtt_client_id, mqtt_user, mqtt_pass)) { 
         Serial.println("conectado!");
         actualizarPantalla("MQTT", "Conectado!");
         delay(500); // Pequeña pausa para ver el mensaje
         
-        // << LÍNEAS PROBLEMÁTICAS ELIMINADAS >>
-        // La reconexión de MQTT ya no interferirá con el estado del semáforo.
+        // ESTAS LÍNEAS AHORA FUNCIONARÁN CORRECTAMENTE
+        tiempoAnteriorEstado = millis();
+        estadoAnterior = ESTADO_VERDE; 
 
-        // Si necesitas suscribirte a un topic al conectar, hazlo aquí:
-        // mqttClient.subscribe("tu/topic/de/entrada");
-
+        // client.subscribe("topic/de/entrada");
       } else {
         Serial.print("falló, rc=");
         Serial.println(mqttClient.state());
       }
     }
   } else {
-    mqttClient.loop(); 
+    mqttClient.loop(); // Esencial para mantener la conexión
   }
 }
