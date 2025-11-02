@@ -17,40 +17,22 @@ String obtenerTimestamp() {
 }
 
 void publicarDatosMQTT() {
-  /* --- Prueba de diagnóstico: Publicar un mensaje simple y verificar el retorno ---
-  
-  String mensajeSimple = "Hola desde el semaforo del Grupo 9";
-  
-  Serial.println("------------------------------------");
-  Serial.print("Intentando publicar en el topic: ");
-  Serial.println(mqtt_topic);
-  Serial.print("Mensaje: ");
-  Serial.println(mensajeSimple);
-
-  // La función publish() devuelve 'true' si el mensaje se pudo poner en el buffer de salida,
-  // y 'false' si falló (ej. buffer lleno, desconexión momentánea, etc.).
-  bool exito = mqttClient.publish(mqtt_topic, mensajeSimple.c_str());
-
-  if (exito) {
-    Serial.println(">>> RESULTADO: ¡ÉXITO! La librería aceptó el mensaje para enviarlo.");
-  } else {
-    Serial.println(">>> RESULTADO: ¡FALLO! La librería NO pudo procesar el mensaje.");
-  }
-  Serial.println("------------------------------------");
-
-  */
   StaticJsonDocument<512> doc;
 
   // 1. Datos de identidad
   doc["sensor_id"] = "TL_001_G9";
   doc["sensor_type"] = "traffic_light";
-  doc["street_id"] = "ST_0246"; // Vuestro Street ID
+  doc["street_id"] = "ST_1370"; // Vuestro Street ID
   doc["timestamp"] = obtenerTimestamp();
 
-  // 2. Objeto "location"
+  // 2. Crear y rellenar el objeto "location"
   JsonObject location = doc.createNestedObject("location");
-  location["latitude"] = 40.4174738;  // Vuestra Latitud
-  location["longitude"] = -3.6162871; // Vuestra Longitud
+  location["latitude"] = 40.4087123;
+  location["longitude"] = -3.6924532;
+  location["street_name"] = "Plaza del Emperador Carlos V";
+  location["district"] = "Centro";
+  location["neighborhood"] = "Palacio";
+  location["postal_code"] = "28005";
 
   // 3. Objeto "data"
   JsonObject data = doc.createNestedObject("data");

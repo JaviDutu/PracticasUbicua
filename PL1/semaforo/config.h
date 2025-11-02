@@ -20,6 +20,7 @@ const char* mqtt_pass = "";
 // --- Identidad del Dispositivo y Topics MQTT ---
 const char* mqtt_client_id = "semaforo_LAB12ANA-G9-test-hive"; 
 const char* mqtt_topic = "universidad/uah/cubicua/g9/semaforo"; // Un topic bien específico
+const char* mqtt_sub_topic = "universidad/uah/cubicua/g9/semaforo/control";
 
 // --- Configuración de NTP (Servidor de Hora) ---
 const char* ntpServer = "pool.ntp.org";
@@ -38,7 +39,8 @@ const int PIN_LDR = 34;
 enum EstadoSemaforo { 
   ESTADO_VERDE, 
   ESTADO_AMARILLO, 
-  ESTADO_ROJO 
+  ESTADO_ROJO,
+  ESTADO_EMERGENCIA // <-- CAMBIO: Añadido nuevo estado de emergencia
 };
 
 // --- Parámetros de Comportamiento del Semáforo ---

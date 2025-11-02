@@ -18,6 +18,7 @@ void handleMqtt() {
       
       // Asegúrate de que las variables mqtt_client_id, etc. estén en config.h
       if (mqttClient.connect(mqtt_client_id, mqtt_user, mqtt_pass)) { 
+        if (mqttClient.connect(mqtt_client_id, mqtt_user, mqtt_pass)) { 
         Serial.println("conectado!");
         actualizarPantalla("MQTT", "Conectado!");
         delay(500); // Pequeña pausa para ver el mensaje
@@ -26,7 +27,12 @@ void handleMqtt() {
         tiempoAnteriorEstado = millis();
         estadoAnterior = ESTADO_VERDE; 
 
-        // client.subscribe("topic/de/entrada");
+        // Modifica esta línea:
+        // client.subscribe("topic/de/entrada"); // <-- LÍNEA ANTIGUA
+        mqttClient.subscribe(mqtt_sub_topic); // <-- LÍNEA NUEVA
+        Serial.print("Suscrito a: ");
+        Serial.println(mqtt_sub_topic);
+        }
       } else {
         Serial.print("falló, rc=");
         Serial.println(mqttClient.state());
