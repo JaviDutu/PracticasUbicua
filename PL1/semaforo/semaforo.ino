@@ -17,6 +17,7 @@
 // --- Prototipos de Funciones ---
 void actualizarPantalla(String mensaje1, String mensaje2 = "");
 void checkLightLevel();
+void leerPulsador();
 void handleWifi();
 void handleMqtt();
 void publicarDatosMQTT();
@@ -55,7 +56,7 @@ void setup() {
   
   pinMode(PIN_LED_ROJO, OUTPUT);
   pinMode(PIN_LED_AMARILLO, OUTPUT);
-pinMode(PIN_LED_VERDE, OUTPUT);
+  pinMode(PIN_LED_VERDE, OUTPUT);
   pinMode(PIN_PULSADOR, INPUT);
   
   Wire.begin();
@@ -121,10 +122,9 @@ estadoAnterior = estadoActual;
       peticionPeaton = false;
     }
   }
-    estadoActual = ESTADO_AMARILLO;
-    tiempoAnteriorEstado = millis();
-    analogWrite(PIN_LED_VERDE, 0);
-  }
+  estadoActual = ESTADO_AMARILLO;
+  tiempoAnteriorEstado = millis();
+  analogWrite(PIN_LED_VERDE, 0);
 }
 void gestionarEstadoAmarillo() {
   if (estadoActual != estadoAnterior) {
@@ -160,7 +160,7 @@ void leerPulsador() {
   if (digitalRead(PIN_PULSADOR) == HIGH && (millis() - ultimoTiempoRebote > retrasoRebote)) {
     if (!peticionPeaton) {
       peticionPeaton = true;
-Serial.println("Petición de peatón registrada.");
+      Serial.println("Petición de peatón registrada.");
     }
     ultimoTiempoRebote = millis();
   }

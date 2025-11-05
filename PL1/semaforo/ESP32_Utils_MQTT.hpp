@@ -20,7 +20,7 @@ void handleMqtt() {
       // Si la conexión es exitosa, avisamos por pantalla
       if (mqttClient.connect(mqtt_client_id, mqtt_user, mqtt_pass)) { 
         if (mqttClient.connect(mqtt_client_id, mqtt_user, mqtt_pass)) { 
-        Serial.println("Conexión con ", mqtt_server, " exitosa");
+        Serial.println("Conexión con "+ String(mqtt_server) +" exitosa");
         actualizarPantalla("MQTT", "Conectado!");
         delay(1000); 
         
