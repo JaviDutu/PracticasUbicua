@@ -24,9 +24,9 @@ void publicarDatosMQTT() {
   StaticJsonDocument<512> doc;
 
   // --- Datos de identidad --- 
-  doc["sensor_id"] = "TL_001_G9";
+  doc["sensor_id"] = "TL_001";
   doc["sensor_type"] = "traffic_light";
-  doc["street_id"] = "ST_1370"; // Vuestro Street ID
+  doc["street_id"] = "ST_1370"; 
   doc["timestamp"] = obtenerTimestamp();
 
 
@@ -79,5 +79,8 @@ void publicarDatosMQTT() {
   if (exito) {
     Serial.println("ÉXITO");
     lastMqttPublishTimestamp = currentTimestamp;
+    if (lastMqttPublishTimestamp - currentTimestamp > 10000) {
+      Serial.println("Advertencia: Gran retraso entre publicaciones MQTT. Es posible que haya un fallo en la conexión.");
+    }
   }
 }

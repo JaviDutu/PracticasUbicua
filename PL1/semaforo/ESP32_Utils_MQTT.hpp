@@ -2,6 +2,7 @@
 // ARCHIVO: ESP32_Utils_MQTT.hpp
 // DESCRIPCIÓN: Funciones genéricas para gestionar la conexión MQTT.
 // =============================================================================
+
 #include <PubSubClient.h>
 // Declaración del cliente MQTT (el objeto real vivirá en el .ino)
 extern PubSubClient mqttClient;
@@ -16,20 +17,18 @@ void handleMqtt() {
       Serial.print("Intentando conexión MQTT...");
       actualizarPantalla("MQTT", "Conectando...");
       
-      // Asegúrate de que las variables mqtt_client_id, etc. estén en config.h
+      // Si la conexión es exitosa, avisamos por pantalla
       if (mqttClient.connect(mqtt_client_id, mqtt_user, mqtt_pass)) { 
         if (mqttClient.connect(mqtt_client_id, mqtt_user, mqtt_pass)) { 
-        Serial.println("conectado!");
+        Serial.println("Conexión con ", mqtt_server, " exitosa");
         actualizarPantalla("MQTT", "Conectado!");
-        delay(500); // Pequeña pausa para ver el mensaje
+        delay(1000); 
         
-        // ESTAS LÍNEAS AHORA FUNCIONARÁN CORRECTAMENTE
+        // Iniciamos el circuito
         tiempoAnteriorEstado = millis();
         estadoAnterior = ESTADO_VERDE; 
 
-        // Modifica esta línea:
-        // client.subscribe("topic/de/entrada"); // <-- LÍNEA ANTIGUA
-        mqttClient.subscribe(mqtt_sub_topic); // <-- LÍNEA NUEVA
+        mqttClient.subscribe(mqtt_sub_topic); 
         Serial.print("Suscrito a: ");
         Serial.println(mqtt_sub_topic);
         }
@@ -39,6 +38,6 @@ void handleMqtt() {
       }
     }
   } else {
-    mqttClient.loop(); // Esencial para mantener la conexión
+    mqttClient.loop(); 
   }
 }
