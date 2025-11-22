@@ -8,19 +8,19 @@
 #define CONFIG_H
 
 // --- Configuración de Red WiFi ---
-const char* ssid = "javi";      
-const char* password = "wifiiphone"; 
+const char* ssid = "cubicua";      
+const char* password = ""; 
 
 // --- Configuración del Broker MQTT (usamos el broker público de mosquito) ---
-const char* mqtt_server = "test.mosquitto.org"; 
+const char* mqtt_server = "172.29.41.88"; //"test.mosquitto.org"; 
 const int   mqtt_port = 1883;                  
 const char* mqtt_user = "";
 const char* mqtt_pass = "";
 
 // --- Identidad del Dispositivo y Topics MQTT ---
 const char* mqtt_client_id = "semaforo_LAB12ANA-G9"; 
-const char* mqtt_topic = "sensors/TL_001/ST_1370/data"; // topic para mandar datos
-const char* mqtt_sub_topic = "sensors/TL_001/ST_1370/control"; // topic para recibir datos
+const char* mqtt_topic = "sensors/ST_1370/TL_001/data"; // topic para mandar datos
+const char* mqtt_sub_topic = "sensors/ST_1370/TL_001/control"; // topic para recibir datos
 
 // --- Configuración de NTP (Servidor de Hora) ---
 const char* ntpServer = "pool.ntp.org";
@@ -43,7 +43,7 @@ enum EstadoSemaforo {
 };
 
 // --- Parámetros de Comportamiento del Semáforo ---
-const unsigned long TIEMPO_VERDE_MINIMO = 10000;
+const unsigned long TIEMPO_VERDE_MINIMO = 15000;
 const unsigned long TIEMPO_AMARILLO = 3000;
 const unsigned long TIEMPO_ROJO = 10000;
 const long intervaloPublicacion = 5000; 

@@ -109,7 +109,7 @@ publicarDatosMQTT();
 void gestionarEstadoVerde() {
   if (estadoActual != estadoAnterior) {
     actualizarPantalla("PASE");
-estadoAnterior = estadoActual;
+    estadoAnterior = estadoActual;
     Serial.println("Entrando en ESTADO_VERDE");
   }
   analogWrite(PIN_LED_VERDE, currentBrigthness);
@@ -121,10 +121,10 @@ estadoAnterior = estadoActual;
       Serial.println("Transición por peatón + tiempo mínimo cumplido.");
       peticionPeaton = false;
     }
+    estadoActual = ESTADO_AMARILLO;
+    tiempoAnteriorEstado = millis();
+    analogWrite(PIN_LED_VERDE, 0);
   }
-  estadoActual = ESTADO_AMARILLO;
-  tiempoAnteriorEstado = millis();
-  analogWrite(PIN_LED_VERDE, 0);
 }
 void gestionarEstadoAmarillo() {
   if (estadoActual != estadoAnterior) {
@@ -161,6 +161,7 @@ void leerPulsador() {
     if (!peticionPeaton) {
       peticionPeaton = true;
       Serial.println("Petición de peatón registrada.");
+      actualizarPantalla("PETICION", "RECIBIDA"); 
     }
     ultimoTiempoRebote = millis();
   }
@@ -231,11 +232,10 @@ void gestionarEstadoEmergencia() {
 // --- Función de recepción de mensajes MQTT ---
 void callback(char* topic, byte* message, unsigned int length) {
   Serial.print("Mensaje recibido en [");
-Serial.print(topic);
+  Serial.print(topic);
   Serial.print("]: ");
   String messageTemp;
-  for (int i = 0; i < length; i++) { messageTemp += (char)message[i];
-}
+  for (int i = 0; i < length; i++) { messageTemp += (char)message[i];}
   Serial.println(messageTemp);
   
   messageTemp.toLowerCase(); 
@@ -244,12 +244,12 @@ Serial.print(topic);
     Serial.println("Comando 'peaton' recibido. Activando petición.");
     if (!peticionPeaton) { 
         peticionPeaton = true;
-        actualizarPantalla("PETICION", "RECIBIDA"); 
+        actualizarPantalla("PEATON", "aproximandose"); 
         delay(1000);
     }
   } else if (messageTemp == "rojo") {
     Serial.println("Comando 'rojo' recibido. Forzando ESTADO_ROJO.");
-  estadoActual = ESTADO_ROJO;
+    estadoActual = ESTADO_ROJO;
     tiempoAnteriorEstado = millis(); 
     
     analogWrite(PIN_LED_VERDE, 0); 

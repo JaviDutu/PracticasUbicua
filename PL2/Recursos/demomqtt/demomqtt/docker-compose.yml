@@ -1,0 +1,32 @@
+name: ubicua-stack
+
+services:
+  # Servicio: Broker MQTT (Eclipse Mosquitto, mensajería en tiempo real)
+  mqtt-broker:
+    image: eclipse-mosquitto:latest
+    container_name: mqtt-server
+    ports:
+      - "1883:1883"  # Puerto MQTT estándar
+      - "9001:9001"  # Puerto WebSocket para MQTT
+    volumes:
+      - ./mqtt/config:/mosquitto/config   # Configuración personalizada
+      - ./mqtt/data:/mosquitto/data       # Persistencia de mensajes
+      - ./mqtt/log:/mosquitto/log         # Logs del broker
+      - mosquitto_data:/mosquitto/data    # Persistencia adicional 
+    networks:
+      - app-network
+    restart: unless-stopped
+    # Ahora vamos a comprobar que el broker MQTT está funcionando correctamente
+    healthcheck:
+      test: ["CMD-SHELL", "mosquitto_pub -h localhost -t health/check -m 'test' || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+# Volúmenes persistentes para datos de broker MQTT
+volumes:
+  mosquitto_data:
+# Red interna para comunicación entre servicios
+networks:
+  app-network:
+    driver: host
