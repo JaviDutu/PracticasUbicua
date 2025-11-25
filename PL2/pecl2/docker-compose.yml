@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  # Servicio 1: La Base de Datos
+  db:
+    image: mariadb:10.6 # Usa la imagen oficial de MariaDB, versión 10.6
+    container_name: pecl2_mariadb
+    restart: always # Si falla, se reinicia solo
+    environment:
+      MARIADB_ROOT_PASSWORD: mysecretpassword # Contraseña para el usuario root
+    ports:
+      - "3306:3306" # Expone el puerto de la BBDD a tu PC (para HeidiSQL)
+    volumes:
+      - ./mariadb_data:/var/lib/mysql # Enlaza nuestra carpeta con la de Docker
+
+  # Servicio 2: El Bróker MQTT
+  mqtt:
+    image: eclipse-mosquitto:2
+    container_name: pecl2_mosquitto
+    restart: always
+    command: mosquitto -c /mosquitto/config/mosquitto.conf # <-- La línea clave
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mosquitto_config:/mosquitto/config
+      - ./mosquitto_data:/mosquitto/data
+
+  # Servicio 3: El Servidor de Aplicaciones (de momento, vacío)
+  app:
+    image: tomcat:10.1-jdk17-temurin # Usa una imagen oficial de Tomcat 10.1 con Java 17
+    container_name: pecl2_tomcat
+    restart: always
+    ports:
+      - "8080:8080" # Expone el puerto de Tomcat
+    depends_on: # Le dice a Tomcat que no arranque hasta que los otros estén listos
+      - db
+      - mqtt

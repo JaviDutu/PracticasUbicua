@@ -12,7 +12,7 @@ const char* ssid = "cubicua";
 const char* password = ""; 
 
 // --- Configuración del Broker MQTT (usamos el broker público de mosquito) ---
-const char* mqtt_server = "172.29.41.88"; //"test.mosquitto.org"; 
+const char* mqtt_server = "172.22.60.25";
 const int   mqtt_port = 1883;                  
 const char* mqtt_user = "";
 const char* mqtt_pass = "";

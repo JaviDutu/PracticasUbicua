@@ -65,7 +65,7 @@ void publicarDatosMQTT() {
   data["uptime_seconds"] = millis() / 1000;
 
   // --- Serializar y publicar ---
-  char buffer[512];
+  char buffer[1024];
   size_t n = serializeJson(doc, buffer);
 
   Serial.println("Publicando mensaje MQTT:");

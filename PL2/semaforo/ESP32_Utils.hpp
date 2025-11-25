@@ -7,7 +7,8 @@
 
 void start_wifi_connection() {
   WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
+  WiFi.begin(ssid);
+  //WiFi.begin(ssid, password);
   Serial.print("Iniciando conexión a WiFi: ");
   Serial.println(ssid);
   actualizarPantalla("WiFi", "Iniciando...");
