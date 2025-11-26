@@ -28,11 +28,11 @@ services:
 
   # Servicio 3: El Servidor de Aplicaciones (de momento, vacío)
   app:
-    image: tomcat:10.1-jdk17-temurin # Usa una imagen oficial de Tomcat 10.1 con Java 17
+    build: C:\Users\javid\OneDrive\Documentos\NetBeansProjects\ServerUbicua-master
     container_name: pecl2_tomcat
     restart: always
     ports:
-      - "8080:8080" # Expone el puerto de Tomcat
-    depends_on: # Le dice a Tomcat que no arranque hasta que los otros estén listos
+      - "8080:8080"
+    depends_on:
       - db
       - mqtt
