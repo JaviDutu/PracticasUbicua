@@ -12,6 +12,7 @@ services:
       - "3306:3306" # Expone el puerto de la BBDD a tu PC (para HeidiSQL)
     volumes:
       - ./mariadb_data:/var/lib/mysql # Enlaza nuestra carpeta con la de Docker
+      - ./mariadb_init:/docker-entrypoint-initdb.d 
 
   # Servicio 2: El Bróker MQTT
   mqtt:
@@ -36,3 +37,5 @@ services:
     depends_on:
       - db
       - mqtt
+    volumes: 
+      - ./tomcat_config/context.xml:/usr/local/tomcat/conf/context.xml
