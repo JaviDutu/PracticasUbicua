@@ -8,10 +8,11 @@ services:
     restart: always # Si falla, se reinicia solo
     environment:
       MARIADB_ROOT_PASSWORD: mysecretpassword # Contraseña para el usuario root
+      TZ: Europe/Madrid 
     ports:
       - "3306:3306" # Expone el puerto de la BBDD a tu PC (para HeidiSQL)
     volumes:
-      - ./mariadb_data:/var/lib/mysql # Enlaza nuestra carpeta con la de Docker
+      - ./mariadb_data2:/var/lib/mysql # Enlaza nuestra carpeta con la de Docker
       - ./mariadb_init:/docker-entrypoint-initdb.d 
 
   # Servicio 2: El Bróker MQTT
@@ -32,6 +33,8 @@ services:
     build: C:\Users\javid\OneDrive\Documentos\NetBeansProjects\ServerUbicua-master
     container_name: pecl2_tomcat
     restart: always
+    environment: 
+      TZ: Europe/Madrid
     ports:
       - "8080:8080"
     depends_on:

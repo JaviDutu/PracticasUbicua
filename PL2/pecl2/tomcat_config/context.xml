@@ -9,5 +9,5 @@
               username="root" 
               password="mysecretpassword" 
               driverClassName="org.mariadb.jdbc.Driver"
-              url="jdbc:mariadb://db:3306/UBICOMP?autoReconnect=true"/>
+              url="jdbc:mariadb://db:3306/UBICOMP?autoReconnect=true&amp;serverTimezone=Europe/Madrid"/>
 </Context>

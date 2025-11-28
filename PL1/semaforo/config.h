@@ -12,7 +12,7 @@ const char* ssid = "info-uah";
 const char* password = ""; 
 
 // --- Configuración del Broker MQTT (usamos el broker público de mosquito) ---
-const char* mqtt_server = "192.168.184.165";
+const char* mqtt_server = "192.168.185.17";
 const int   mqtt_port = 1883;                  
 const char* mqtt_user = "";
 const char* mqtt_pass = "";
